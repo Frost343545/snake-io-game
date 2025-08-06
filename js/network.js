@@ -7,7 +7,7 @@ class NetworkManager {
         this.maxReconnectAttempts = 5;
         this.reconnectDelay = 1000;
         this.playerId = null;
-        this.serverUrl = 'wss://snake-io-server-xxxxx.onrender.com'; // Замените на ваш URL с Render
+        this.serverUrl = 'wss://snake-io-game.onrender.com'; // Ваш реальный URL с Render
         this.game = null;
         this.lastUpdate = 0;
         this.updateInterval = 50; // Обновление каждые 50мс
