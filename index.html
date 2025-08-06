@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake.io - Онлайн Змейка</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body>
+    <!-- Загрузочный экран -->
+    <div id="loadingScreen" class="loading-screen">
+        <div class="loading-content">
+            <div class="snake-logo">
+                <div class="snake-head"></div>
+                <div class="snake-body"></div>
+                <div class="snake-body"></div>
+                <div class="snake-body"></div>
+            </div>
+            <h1>Snake.io</h1>
+            <div class="loading-bar">
+                <div class="loading-progress"></div>
+            </div>
+            <p>Загрузка...</p>
+        </div>
+    </div>
+
+    <!-- Главное меню -->
+    <div id="mainMenu" class="menu-screen">
+        <div class="menu-content">
+            <div class="game-title">
+                <h1>Snake.io</h1>
+                <div class="title-decoration"></div>
+            </div>
+            
+            <div class="menu-buttons">
+                <button id="playBtn" class="menu-btn primary-btn">
+                    <span class="btn-icon">▶</span>
+                    Играть
+                </button>
+                <button id="customizeBtn" class="menu-btn secondary-btn">
+                    <span class="btn-icon">🎨</span>
+                    Настройки
+                </button>
+                <button id="leaderboardBtn" class="menu-btn secondary-btn">
+                    <span class="btn-icon">🏆</span>
+                    Таблица лидеров
+                </button>
+                <button id="helpBtn" class="menu-btn secondary-btn">
+                    <span class="btn-icon">❓</span>
+                    Помощь
+                </button>
+            </div>
+
+            <div class="player-info">
+                <div class="player-avatar">
+                    <div id="currentSkin" class="skin-preview"></div>
+                </div>
+                <div class="player-stats">
+                    <div class="stat">
+                        <span class="stat-label">Очки:</span>
+                        <span id="playerScore" class="stat-value">0</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">Длина:</span>
+                        <span id="playerLength" class="stat-value">3</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Экран настроек -->
+    <div id="customizeScreen" class="menu-screen hidden">
+        <div class="menu-content">
+            <h2>Настройки персонажа</h2>
+            
+            <div class="customize-section">
+                <h3>Скин змейки</h3>
+                <div class="skin-grid">
+                    <div class="skin-option active" data-skin="default">
+                        <div class="skin-preview default-skin"></div>
+                        <span>Классический</span>
+                    </div>
+                    <div class="skin-option" data-skin="neon">
+                        <div class="skin-preview neon-skin"></div>
+                        <span>Неоновый</span>
+                    </div>
+                    <div class="skin-option" data-skin="golden">
+                        <div class="skin-preview golden-skin"></div>
+                        <span>Золотой</span>
+                    </div>
+                    <div class="skin-option" data-skin="rainbow">
+                        <div class="skin-preview rainbow-skin"></div>
+                        <span>Радужный</span>
+                    </div>
+                    <div class="skin-option" data-skin="fire">
+                        <div class="skin-preview fire-skin"></div>
+                        <span>Огненный</span>
+                    </div>
+                    <div class="skin-option" data-skin="ice">
+                        <div class="skin-preview ice-skin"></div>
+                        <span>Ледяной</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="customize-section">
+                <h3>Голова змейки</h3>
+                <div class="head-grid">
+                    <div class="head-option active" data-head="default">
+                        <div class="head-preview default-head"></div>
+                        <span>Обычная</span>
+                    </div>
+                    <div class="head-option" data-head="crown">
+                        <div class="head-preview crown-head"></div>
+                        <span>Корона</span>
+                    </div>
+                    <div class="head-option" data-head="sunglasses">
+                        <div class="head-preview sunglasses-head"></div>
+                        <span>Очки</span>
+                    </div>
+                    <div class="head-option" data-head="hat">
+                        <div class="head-preview hat-head"></div>
+                        <span>Шляпа</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="customize-section">
+                <h3>Имя игрока</h3>
+                <input type="text" id="playerName" placeholder="Введите ваше имя" maxlength="15">
+            </div>
+
+            <div class="customize-section">
+                <h3>Настройки сети</h3>
+                <div class="network-settings">
+                    <div class="setting-item">
+                        <label class="setting-label">
+                            <input type="checkbox" id="localModeToggle" checked>
+                            <span class="checkmark"></span>
+                            Локальный режим (ИИ игроки)
+                        </label>
+                        <p class="setting-description">Игра с компьютерными противниками без подключения к серверу</p>
+                    </div>
+                    <div class="setting-item">
+                        <label class="setting-label">
+                            <input type="checkbox" id="autoReconnectToggle" checked>
+                            <span class="checkmark"></span>
+                            Автопереподключение
+                        </label>
+                        <p class="setting-description">Автоматически переключаться в локальный режим при ошибках сети</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="customize-buttons">
+                <button id="saveCustomizeBtn" class="menu-btn primary-btn">Сохранить</button>
+                <button id="backToMenuBtn" class="menu-btn secondary-btn">Назад</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Игровое поле -->
+    <div id="gameScreen" class="game-screen hidden">
+        <div class="game-header">
+            <div class="game-info">
+                <div class="score-display">
+                    <span class="score-label">Очки:</span>
+                    <span id="gameScore">0</span>
+                </div>
+                <div class="length-display">
+                    <span class="length-label">Длина:</span>
+                    <span id="gameLength">3</span>
+                </div>
+            </div>
+            <div class="game-controls">
+                <button id="pauseBtn" class="control-btn">⏸</button>
+                <button id="fullscreenBtn" class="control-btn">⛶</button>
+            </div>
+        </div>
+
+        <canvas id="gameCanvas"></canvas>
+
+        <div class="mobile-controls">
+            <div class="control-pad">
+                <button id="upBtn" class="direction-btn">↑</button>
+                <div class="horizontal-controls">
+                    <button id="leftBtn" class="direction-btn">←</button>
+                    <button id="rightBtn" class="direction-btn">→</button>
+                </div>
+                <button id="downBtn" class="direction-btn">↓</button>
+            </div>
+        </div>
+
+        <div class="game-overlay hidden" id="gameOverlay">
+            <div class="overlay-content">
+                <h2>Игра приостановлена</h2>
+                <p>Нажмите пробел для продолжения</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Экран окончания игры -->
+    <div id="gameOverScreen" class="menu-screen hidden">
+        <div class="menu-content">
+            <h2>Игра окончена</h2>
+            
+            <div class="game-results">
+                <div class="result-item">
+                    <span class="result-label">Финальный счет:</span>
+                    <span id="finalScore" class="result-value">0</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Максимальная длина:</span>
+                    <span id="finalLength" class="result-value">3</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Время игры:</span>
+                    <span id="gameTime" class="result-value">0:00</span>
+                </div>
+            </div>
+
+            <div class="game-over-buttons">
+                <button id="playAgainBtn" class="menu-btn primary-btn">Играть снова</button>
+                <button id="mainMenuBtn" class="menu-btn secondary-btn">Главное меню</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Таблица лидеров -->
+    <div id="leaderboardScreen" class="menu-screen hidden">
+        <div class="menu-content">
+            <h2>Таблица лидеров</h2>
+            
+            <div class="leaderboard-tabs">
+                <button class="tab-btn active" data-tab="daily">За день</button>
+                <button class="tab-btn" data-tab="weekly">За неделю</button>
+                <button class="tab-btn" data-tab="alltime">За все время</button>
+            </div>
+
+            <div class="leaderboard-content">
+                <div id="leaderboardList" class="leaderboard-list">
+                    <!-- Лидеры будут загружены динамически -->
+                </div>
+            </div>
+
+            <button id="backToMenuFromLeaderboard" class="menu-btn secondary-btn">Назад</button>
+        </div>
+    </div>
+
+    <!-- Экран помощи -->
+    <div id="helpScreen" class="menu-screen hidden">
+        <div class="menu-content">
+            <h2>Как играть</h2>
+            
+            <div class="help-content">
+                <div class="help-section">
+                    <h3>Управление</h3>
+                    <div class="control-help">
+                        <div class="control-item">
+                            <span class="control-key">WASD</span>
+                            <span class="control-desc">Движение (ПК)</span>
+                        </div>
+                        <div class="control-item">
+                            <span class="control-key">Стрелки</span>
+                            <span class="control-desc">Движение (ПК)</span>
+                        </div>
+                        <div class="control-item">
+                            <span class="control-key">Кнопки</span>
+                            <span class="control-desc">Движение (Мобильные)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="help-section">
+                    <h3>Цель игры</h3>
+                    <p>Собирайте еду, чтобы расти и становиться длиннее. Избегайте столкновений с другими игроками и стенами.</p>
+                </div>
+
+                <div class="help-section">
+                    <h3>Советы</h3>
+                    <ul>
+                        <li>Планируйте маршрут заранее</li>
+                        <li>Используйте других игроков как препятствия</li>
+                        <li>Не торопитесь - безопасность важнее скорости</li>
+                        <li>Следите за границами поля</li>
+                    </ul>
+                </div>
+            </div>
+
+            <button id="backToMenuFromHelp" class="menu-btn secondary-btn">Назад</button>
+        </div>
+    </div>
+
+    <!-- Уведомления -->
+    <div id="notificationContainer" class="notification-container"></div>
+
+    <!-- Звуковые эффекты -->
+    <audio id="eatSound" preload="none">
+        <source src="sounds/eat.mp3" type="audio/mpeg" onerror="console.log('Звуковой файл eat.mp3 не найден')">
+    </audio>
+    <audio id="deathSound" preload="none">
+        <source src="sounds/death.mp3" type="audio/mpeg" onerror="console.log('Звуковой файл death.mp3 не найден')">
+    </audio>
+    <audio id="powerupSound" preload="none">
+        <source src="sounds/powerup.mp3" type="audio/mpeg" onerror="console.log('Звуковой файл powerup.mp3 не найден')">
+    </audio>
+
+    <script src="js/game.js"></script>
+    <script src="js/network.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html> 
